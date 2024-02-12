@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetRooms } from "../../hooks/rooms";
-import { Room } from "../../types/generated";
+import { RoomType } from "../../types/generated";
 import { RoomSearchBar } from "./RoomSearchBar";
 import RoomListItem from "./RoomListItem";
 import { Box, Typography } from "@mui/material";
@@ -13,8 +13,8 @@ function RoomListing() {
       <RoomSearchBar searchRooms={fetchRooms} error={error} loading={loading} />
       <Box style={{ background: "rgba(0, 0, 0, 0.5)" }} px={8} py={4}>
         {roomList &&
-          roomList.map((room: Room) => (
-            <RoomListItem room={room} key={room.number} />
+          roomList.map((room: RoomType) => (
+            <RoomListItem room={room} key={room.id} />
           ))}
           {!roomList || roomList.length === 0 && (
             <Typography textAlign="center" variant="h4" color="white">

@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { AxiosResponse } from "axios";
-import { Room } from "../types/generated";
+import { RoomType } from "../types/generated";
 import { performRequestWithRetry } from "../api/retry";
 import { apiUrl } from "../api/config";
 
 export function useGetRooms() {
-  const [rooms, setRooms] = useState<Room[]>([]);
+  const [rooms, setRooms] = useState<RoomType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
   const fetchRooms = async (
     checkIn: string,
     checkOut: string,
-    roomType: string
+    guestCapacity: number,
   ): Promise<void> => {
     setLoading(true);
     const options = {
@@ -20,15 +20,15 @@ export function useGetRooms() {
       params: {
         checkinDate: checkIn,
         checkoutDate: checkOut,
-        roomType,
+        guestCapacity
       },
     };
     try {
       const response = await performRequestWithRetry(
-        `${apiUrl}/rooms`,
+        `${apiUrl}/roomTypes`,
         options
       );
-      const roomList = (response as AxiosResponse<Room[]>).data;
+      const roomList = (response as AxiosResponse<RoomType[]>).data;
       setRooms(roomList);
     } catch (e: any) {
       setError(e);
