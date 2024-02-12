@@ -1,7 +1,7 @@
 # How to Implement the Hotel Reservation API
 
 1) Create a Ballerina Project with name `hotel-reservation-api`
-2) Refer README.md and generate the Record Types for the service.
+2) Refer README.md and generate the Record types for the service.
 3) Write init function to load rooms using json in the resources/rooms.json.
 4) Write a service for implement API for hotel reservation front end. 
    It should provide following API paths. Refer README.md for more on service resources.
@@ -17,7 +17,7 @@
 
 TIPS: 
 1) Use configurable variable to store the rooms.json file path.
-2) Use init.bal, types.bal, service.bal, utils.bal organize the code.
+2) Use init.bal, types.bal, service.bal, utils.bal organize the code. We can use
 3) Use two tables for Rooms and Reservations.
    
    ```
@@ -27,7 +27,8 @@ TIPS:
    
    ```
    
-4) Following code can be used to send notifications.
+4) use `time:utcFromString` for convert time to utc
+5) Following code can be used to send notifications.
    
    ```
    import wso2/choreo.sendemail;
@@ -48,4 +49,4 @@ TIPS:
    }
 
    ```
-5) 
+6) 
