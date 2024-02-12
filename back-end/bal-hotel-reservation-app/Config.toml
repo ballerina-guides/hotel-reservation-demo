@@ -1,0 +1,2 @@
+[bal_hotel_reservation_app]
+room_details_file = "resources/rooms.json"
