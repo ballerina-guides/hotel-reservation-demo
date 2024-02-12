@@ -8,14 +8,14 @@ import {
 } from "@mui/material";
 import { useReserveRoom } from "../../hooks/reservations";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Room } from "../../types/generated";
+import { RoomType } from "../../types/generated";
 import { Location } from "history";
 import { UserContext } from "../../contexts/user";
 import { toast } from "react-toastify";
 import { formatDate } from "../../utils/utils";
 
 interface RoomState {
-  room: Room;
+  room: RoomType;
 }
 
 const ReservationForm = () => {
@@ -75,7 +75,7 @@ const ReservationForm = () => {
       checkinDate: checkIn.toISOString(),
       checkoutDate: checkOut.toISOString(),
       rate: 100,
-      roomType: room.type.name,
+      roomType: room.name,
       user: {
         email: emailAddress,
         id: user.id,

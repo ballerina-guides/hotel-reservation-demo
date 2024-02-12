@@ -1,10 +1,10 @@
 import React from "react";
-import { Room } from "../../types/generated";
+import { RoomType } from "../../types/generated";
 import { Box, Button, Typography } from "@mui/material";
 import LuggageOutlinedIcon from "@mui/icons-material/LuggageOutlined";
 import { useNavigate } from "react-router-dom";
 
-export default function RoomListItem(props: { room: Room }) {
+export default function RoomListItem(props: { room: RoomType }) {
   const { room } = props;
   const navigate = useNavigate();
   return (
@@ -27,7 +27,7 @@ export default function RoomListItem(props: { room: Room }) {
         alignItems="flex=start"
       >
         <Box>
-          <Typography variant="h6" color="grey">{room.type.name}</Typography>
+          <Typography variant="h6" color="grey">{room.name}</Typography>
         </Box>
         <Box display="flex" justifyContent="flex-start" alignItems="center">
           <Box>
@@ -35,7 +35,7 @@ export default function RoomListItem(props: { room: Room }) {
           </Box>
           <Box>
             <Typography fontSize={12}>
-              {room.type.guestCapacity} Guests
+              {room.guestCapacity} Guests
             </Typography>
           </Box>
         </Box>
@@ -49,7 +49,7 @@ export default function RoomListItem(props: { room: Room }) {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography>Room: {room.number}</Typography>
+        <Typography>{""}</Typography>
       </Box>
 
       <Box
@@ -60,7 +60,7 @@ export default function RoomListItem(props: { room: Room }) {
         justifyContent="center"
         alignItems="flex-end"
       >
-        <Typography>{room.type.price}$ /day</Typography>
+        <Typography>{room.price}$ /day</Typography>
       </Box>
 
       <Box
