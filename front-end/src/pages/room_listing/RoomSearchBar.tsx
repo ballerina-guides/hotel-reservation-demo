@@ -4,14 +4,14 @@ import { toast } from "react-toastify";
 import { formatDate } from "../../utils/utils";
 
 interface RoomSearchProps {
-  searchRooms: (checkIn: string, checkOut: string, roomType: string) => void;
+  searchRooms: (checkIn: string, checkOut: string, guestCapacity: number) => void;
   loading: boolean;
   error?: Error;
 }
 
 export function RoomSearchBar(props: RoomSearchProps) {
   const { searchRooms, loading, error } = props;
-  const [roomType, setRoomType] = React.useState("Single");
+  const [guestCapacity, setGuestCapacity] = React.useState(2);
   const [checkIn, setCheckIn] = React.useState<Date>(new Date());
   const [checkOut, setCheckOut] = React.useState<Date>(new Date());
   const [maxCheckInDate, setMaxCheckInDate] = React.useState<string | undefined>(
@@ -25,7 +25,7 @@ export function RoomSearchBar(props: RoomSearchProps) {
   }, [error]);
 
   const handleRoomTypeChange = (event: any) => {
-    setRoomType(event.target.value as string);
+    setGuestCapacity(event.target.value as number);
   };
 
   const handleCheckInChange = (e: any) => {
@@ -43,11 +43,11 @@ export function RoomSearchBar(props: RoomSearchProps) {
   };
 
   const handleRoomSearch = () => {
-    console.log(checkIn, checkOut, roomType);
+    console.log(checkIn, checkOut, guestCapacity);
     if (checkIn === null || checkOut === null) {
       return;
     }
-    searchRooms(checkIn.toISOString(), checkOut.toISOString(), roomType);
+    searchRooms(checkIn.toISOString(), checkOut.toISOString(), guestCapacity);
   };
 
   return (
@@ -92,17 +92,16 @@ export function RoomSearchBar(props: RoomSearchProps) {
         <Box style={{ backgroundColor: "white" }} width="30%" borderRadius={2}>
           <TextField
             fullWidth
-            label="Room Type"
-            id="demo-simple-select"
-            value={roomType}
-            placeholder="All types"
+            label="Guest Capacity"
+            value={guestCapacity}
             select={true}
             onChange={handleRoomTypeChange}
             variant="filled"
           >
-            <MenuItem value={"Single"}>Single</MenuItem>
-            <MenuItem value={"Double"}>Double</MenuItem>
-            <MenuItem value={"Family"}>Family</MenuItem>
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
           </TextField>
         </Box>
       </Box>
@@ -111,7 +110,7 @@ export function RoomSearchBar(props: RoomSearchProps) {
         variant="contained"
         onClick={handleRoomSearch}
         disabled={
-          checkIn === null || checkOut === null || loading || roomType === ""
+          checkIn === null || checkOut === null || loading
         }
       >
         {loading ? (

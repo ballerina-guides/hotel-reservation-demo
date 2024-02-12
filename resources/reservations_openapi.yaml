@@ -1,0 +1,264 @@
+openapi: 3.0.1
+info:
+  title: Reservations
+  version: 0.1.0
+servers:
+- url: "{server}:{port}/reservations"
+  variables:
+    server:
+      default: http://localhost
+    port:
+      default: "9090"
+paths:
+  /roomTypes:
+    get:
+      operationId: getRoomtypes
+      parameters:
+      - name: checkinDate
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: checkoutDate
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: guestCapacity
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoomType'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+  /:
+    post:
+      operationId: post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationRequest'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        "404":
+          description: NotFound
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+  /{reservation_id}:
+    put:
+      operationId: putReservationId
+      parameters:
+      - name: reservation_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReservationRequest'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        "404":
+          description: NotFound
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+    delete:
+      operationId: deleteReservationId
+      parameters:
+      - name: reservation_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: NotFound
+          content:
+            text/plain:
+              schema:
+                type: string
+  /users/{userId}:
+    get:
+      operationId: getUsersUserid
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+components:
+  schemas:
+    ErrorPayload:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: Reason phrase
+        path:
+          type: string
+          description: Request path
+        method:
+          type: string
+          description: Method type of the request
+        message:
+          type: string
+          description: Error message
+        timestamp:
+          type: string
+          description: Timestamp of the error
+        status:
+          type: integer
+          description: Relevant HTTP status code
+          format: int32
+    Reservation:
+      required:
+      - checkinDate
+      - checkoutDate
+      - id
+      - room
+      - user
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        room:
+          $ref: '#/components/schemas/Room'
+        checkinDate:
+          type: string
+        checkoutDate:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+    RoomType:
+      required:
+      - guestCapacity
+      - id
+      - name
+      - price
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        guestCapacity:
+          type: integer
+          format: int64
+        price:
+          type: number
+          format: double
+    User:
+      required:
+      - email
+      - id
+      - mobileNumber
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        mobileNumber:
+          type: string
+    ReservationRequest:
+      required:
+      - checkinDate
+      - checkoutDate
+      - rate
+      - roomType
+      - user
+      type: object
+      properties:
+        checkinDate:
+          type: string
+        checkoutDate:
+          type: string
+        roomType:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        rate:
+          type: number
+          format: double
+    UpdateReservationRequest:
+      required:
+      - checkinDate
+      - checkoutDate
+      type: object
+      properties:
+        checkinDate:
+          type: string
+        checkoutDate:
+          type: string
+    Room:
+      required:
+      - number
+      - type
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int64
+        type:
+          $ref: '#/components/schemas/RoomType'
