@@ -33,7 +33,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "constraint"
-version = "1.5.0"
+version = "1.4.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
@@ -41,7 +41,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "crypto"
-version = "2.6.2"
+version = "2.5.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"},
 	{org = "ballerina", name = "time"}
@@ -309,8 +309,8 @@ modules = [
 ]
 
 [[package]]
-org = "waruna"
-name = "bal_hotel_reservation_app"
+org = "wso2"
+name = "backend"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "http"},
@@ -322,7 +322,7 @@ dependencies = [
 	{org = "wso2", name = "choreo.sendsms"}
 ]
 modules = [
-	{org = "waruna", packageName = "bal_hotel_reservation_app", moduleName = "bal_hotel_reservation_app"}
+	{org = "wso2", packageName = "backend", moduleName = "backend"}
 ]
 
 [[package]]
