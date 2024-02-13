@@ -24,7 +24,7 @@ http:localhost:9090/reservations
 
 ```json
 
-json j = [
+[
     {
         "id": 0,
         "name": "Single",
@@ -40,7 +40,7 @@ json j = [
         "price": 100
     }
 
-];
+]
 
 ```
 
@@ -126,4 +126,26 @@ Same as create new reservation
 
 **Sample Response :**
 
-Same as Get available rooms
+```json
+
+[
+    {
+        "number": 101,
+        "type": {
+            "id": 0,
+            "name": "Single",
+            "guestCapacity": 1,
+            "price": 80
+        }
+    },
+    {
+        "number": 102,
+        "type": {
+            "id": 0,
+            "name": "Double",
+            "guestCapacity": 2,
+            "price": 100
+        }
+    }
+]
+```
