@@ -2,6 +2,9 @@ import ballerina/http;
 
 import wso2/choreo.sendemail;
 import wso2/choreo.sendsms;
+import ballerina/io;
+
+table<Room> key(number) rooms;
 
 table<Reservation> key(id) roomReservations = table [];
 
@@ -12,6 +15,14 @@ type ReservationError record {|
 
 sendsms:Client smsClient = check new ();
 sendemail:Client emailClient = check new ();
+
+public configurable string room_details_file = ?;
+
+function init() returns error? {
+    json roomsJson = check io:fileReadJson(room_details_file);
+    rooms = check roomsJson.cloneWithType();
+}
+
 
 service /reservations on new http:Listener(9090) {
 
@@ -70,3 +81,5 @@ service /reservations on new http:Listener(9090) {
             select r;
     }
 }
+
+

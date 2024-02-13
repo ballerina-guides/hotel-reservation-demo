@@ -1,10 +1,10 @@
-public type Reservation record {
+public type Reservation record {|
     readonly int id;
     Room room;
     string checkinDate;
     string checkoutDate;
     User user;
-};
+|};
 
 public type Room record {|
     readonly int number;

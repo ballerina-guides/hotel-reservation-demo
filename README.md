@@ -1,2 +1,224 @@
-# hotel-reservation-demo
-This is demo application of using ballerina to develop simple hotel reservation application and this will be deployed in choreo
+# Hotel Reservation Demo
+
+This application has front end developed using React.js and API service implemented using ballerina to demo simple hotel reservation usecase.
+
+
+# How to Run 
+
+1. Goto backend directory and then run `bal run`
+2. Goto root directory and then run
+   
+   ```
+   npm install
+   npm start
+   
+   ```
+
+3. Visit the `http://localhost:3000/reservations`
+
+
+# How to Implemet Hotel Reservation API
+
+## Prerequisites
+
+ballerina
+npm
+
+## Steps
+
+1) Clone Git Repo https://github.com/ballerina-guides/hotel-reservation-demo
+2) Goto backend directory
+3) Create a Ballerina Project with name `bal new .`
+4) Refer README.md `Hotel Reservation Ballerina API` section and generate the Record types for the service.
+5) Write init function to load rooms using json in the resources/rooms.json.
+6) Write a service for implement API for hotel reservation front end. 
+   It should provide following API paths. Refer README.md for more on service resources.
+
+   1) Get available room types
+   2) Create a reservation
+   3) Update the reservation
+   4) Get user reservations
+   5) Delete the reservation
+
+7) Write a simple test for get roomTypes, add a reservation, update reservations, see user reservations and delete reservations.
+
+
+## TIPS: 
+1) Use configurable variable to store the rooms.json file path and use init method to load it from file. 
+   We can use `io:fileReadJson` and `cloneWithType` to load the rooms from json.
+
+2) Use types.bal, service.bal, utils.bal organize the code.
+3) Use io package to read json from file.
+
+
+```
+
+    json roomsJson = check io:fileReadJson(room_details_file);
+    rooms = check roomsJson.cloneWithType();
+
+
+```
+1)  and `cloneWithType` to method to convert to arrays of rooms.
+2) 
+3)  Use two tables for Rooms and Reservations.
+   
+   ```
+   table<Room> key(number) rooms;
+
+   table<Reservation> key(id) roomReservations = table [];
+   
+   ```
+   
+4)  use `time:utcFromString` for convert time to utc.
+5)  Following code can be used to send notifications.
+   
+```
+   import wso2/choreo.sendemail;
+   import wso2/choreo.sendsms;
+
+   function sendNotificationForReservation(Reservation reservation, string action) {
+      
+      string message = string `We are pleased to confirm your reservation.`;
+      string emailSubject = string `Reservation ${action}: ${reservation.id}`;
+      string emailBody = string `Dear ${reservation.user.name},${"\n"}${"\n"}We are pleased to confirm your reservation at our hotel.${"\n"}${"\n"}Thanks, ${"\n"}Reservation Team`;
+      string|error sendEmal = trap emailClient->sendEmail(reservation.user.email, emailSubject, emailBody);
+      if (sendEmal is error) {
+         log:printError("Error sending Email: ", sendEmal);
+      }
+      string|error sendSms = trap smsClient->sendSms(reservation.user.mobileNumber, message);
+      if (sendSms is error) {
+         log:printError("Error sending SMS: ", sendSms);
+      }
+   }
+
+```
+
+# Hotel Reservation Ballerina API
+
+This ballerina project exposes reservation http service. 
+
+## Base URL 
+
+http:localhost:9090/reservations
+
+## Resources
+
+### 1) Get All available room Types
+
+**Path** : /roomTypes/
+
+**HTTP Method:** GET
+
+**Query Paramters:** 
+
+    string checkinDate
+    string checkoutDate
+    int guestCapacity
+
+**Sample Response :**
+
+```json
+
+json j = [
+    {
+        "id": 0,
+        "name": "Single",
+        "guestCapacity": 1,
+        "price": 80
+
+    },
+
+    {
+        "id": 0,
+        "name": "Double",
+        "guestCapacity": 2,
+        "price": 100
+    }
+
+];
+
+```
+
+### 2) Create a new reservation
+
+**Path :** /
+
+**HTTP Method:** POST
+
+**Sample Request :**
+
+```json
+{
+    "checkinDate": "2024-02-19T14:00:00Z",
+    "checkoutDate": "2024-02-20T10:00:00Z",
+    "rate": 100,
+    "user": {
+        "id": "123",
+        "name": "waruna",
+        "email": "waruna@someemail.com",
+        "mobileNumber": "987"
+    },
+    "roomType": "Family"
+}
+```
+
+
+**Sample Response :**
+
+```json
+{
+    "id": "1",
+    "checkinDate": "2024-02-19T14:00:00Z",
+    "checkoutDate": "2024-02-20T10:00:00Z",
+    "user": {
+        "id": "123",
+        "name": "waruna",
+        "email": "waruna@someemail.com",
+        "mobileNumber": "987"
+    },
+    "room": {
+        "number" :  201,
+        "type": {
+            "id": 0,
+            "name": "Double",
+            "guestCapacity": 2,
+            "price": 100
+        }
+    }
+}
+```
+
+### 3) Update a exsisting reservation
+
+**Path :** /[reservationId]
+
+**HTTP Method:** PUT
+
+**Sample Request :**
+
+```json
+{
+    "checkinDate": "2024-02-20T14:00:00Z",
+    "checkoutDate": "2024-02-21T10:00:00Z"
+}
+```
+
+**Sample Response :**
+
+Same as create new reservation
+
+### 4) Remove a reservation
+
+**Path** : /[reservationId]
+
+**HTTP Method:** DELETE
+
+### 5) Get all reservations for  given user id
+
+**Path :** /users/[userID]
+
+**HTTP Method:** GET
+
+**Sample Response :**
+
+Same as Get available rooms
