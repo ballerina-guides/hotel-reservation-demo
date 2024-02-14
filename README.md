@@ -5,14 +5,19 @@ This application has front end developed using React.js and API service implemen
 
 # How to Run 
 
-1. Goto backend directory and then run `bal run`
-2. Goto root directory and then run
-   
-   ```
-   npm install
-   npm start
-   
-   ```
+1. Run Ballerina Backend.
+   - Install [Ballerina](https://ballerina.io/downloads/) version 2201.8.4 if not already done.
+   - Navigate to the backend directory: `cd back-end`
+   - Run `bal run`
+
+2. Start Front-end.
+   - Install Node.js version 20.x.x.
+   - Run
+```
+cd front-end
+npm install
+npm start
+```
 
 3. Visit the `http://localhost:3000/reservations`
 
