@@ -14,6 +14,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import NotFound from "./pages/not_found";
 import LandingPage from "./pages/landing_page";
 import theme from "./theme";
+import ErrorPage from "./pages/error";
 
 const FakeLoginPage = () => {
   return (
@@ -112,6 +113,7 @@ export default function App() {
                   path="/reservations/change"
                   Component={ReservationUpdatingPage}
                 />
+                <Route path="/error" Component={ErrorPage} />
                 {/* Fake login page. This will only be applied for the local deployment*/}
                 <Route path="/auth/login" Component={FakeLoginPage} />
                 {/* Otherwise, show not found page */}
