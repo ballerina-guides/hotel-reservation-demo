@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function NotFound() {
+export default function ErrorPage() {
   const navigate = useNavigate();
   return (
     <Box
@@ -15,7 +15,7 @@ export default function NotFound() {
       alignItems="center"
     >
       <Typography textAlign="center" variant="h4" color="white">
-        Page Not Found
+        Error occurred
       </Typography>
       <Button
         onClick={() => navigate("/rooms")}

@@ -14,16 +14,15 @@ import { ThemeProvider } from "@mui/material/styles";
 import NotFound from "./pages/not_found";
 import LandingPage from "./pages/landing_page";
 import theme from "./theme";
+import ErrorPage from "./pages/error";
 
 const FakeLoginPage = () => {
   return (
     <div>
       <button
         onClick={() => {
-          Cookies.set(
-            "userinfo",
-            "eyJhdF9oYXNoIjoiYjJfSmlkcHFuR05ocDZWdUN0ZGM3ZyIsInN1YiI6ImRlbW8iLCJhbXIiOlsiY2hvcmVvX2luX2J1aWx0X2lkcF9hdXRoZW50aWNhdG9yIl0sImlzcyI6Imh0dHBzOi8vc3RzLmNob3Jlby5kZXY6NDQzL29hdXRoMi90b2tlbiIsImxhc3RfbmFtZSI6IkRvZSIsImdyb3VwcyI6ImNob3JlbyIsImF1ZCI6InhFU3NDQmZLMFRNWFpMZVhMdjZWbXdaOWdvRWEiLCJjX2hhc2giOiI3WVhlOW9UcTVTUlNwV2FGeWZPaUNBIiwibmJmIjoxNzA3MDI5ODUyLCJhenAiOiJ4RVNzQ0JmSzBUTVhaTGVYTHY2Vm13Wjlnb0VhIiwiZXhwIjoxNzA3MDMzNDUyLCJpYXQiOjE3MDcwMjk4NTIsImZpcnN0X25hbWUiOiJKb2huIiwiZW1haWwiOiJqb2huQGV4YW1wbGUub3JnIiwidXNlcm5hbWUiOiJkZW1vIn0="
-          );
+          const value = process.env.REACT_APP_USER_INFO_COOKIE || "";
+          Cookies.set("userinfo", value);
           window.location.pathname = "/rooms";
         }}
       >
@@ -114,6 +113,7 @@ export default function App() {
                   path="/reservations/change"
                   Component={ReservationUpdatingPage}
                 />
+                <Route path="/error" Component={ErrorPage} />
                 {/* Fake login page. This will only be applied for the local deployment*/}
                 <Route path="/auth/login" Component={FakeLoginPage} />
                 {/* Otherwise, show not found page */}
