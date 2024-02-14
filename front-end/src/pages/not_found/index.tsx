@@ -22,7 +22,7 @@ export default function NotFound() {
         size="large"
         variant="contained"
         color="secondary"
-        style={{ borderRadius: 16 }}
+        style={{ borderRadius: 16, margin: 16 }}
       >
         Home
       </Button>
