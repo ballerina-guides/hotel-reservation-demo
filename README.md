@@ -2,7 +2,6 @@
 
 This application has front end developed using React.js and API service implemented using ballerina to demo simple hotel reservation usecase.
 
-
 # How to Run 
 
 1. Goto backend directory and then run `bal run`
@@ -56,8 +55,8 @@ This application has front end developed using React.js and API service implemen
 ```
 
 1)  and `cloneWithType` to method to convert to arrays of rooms.
-2) 
-3)  Use two tables for Rooms and Reservations.
+   
+2)  Use two tables for Rooms and Reservations.
    
    ```
    table<Room> key(number) rooms;
@@ -66,8 +65,8 @@ This application has front end developed using React.js and API service implemen
    
    ```
    
-4)  use `time:utcFromString` for convert time to utc.
-5)  Following code can be used to send notifications.
+3)  use `time:utcFromString` for convert time to utc.
+4)  Following code can be used to send notifications.
    
 ```
    import wso2/choreo.sendemail;

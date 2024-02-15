@@ -1,22 +1,10 @@
 import ballerina/http;
-
-import wso2/choreo.sendemail;
-import wso2/choreo.sendsms;
 import ballerina/io;
 
-table<Room> key(number) rooms;
-
+final table<Room> key(number) rooms;
 table<Reservation> key(id) roomReservations = table [];
-
-type ReservationError record {|
-    *http:NotFound;
-    string body;
-|};
-
-sendsms:Client smsClient = check new ();
-sendemail:Client emailClient = check new ();
-
 public configurable string room_details_file = ?;
+
 
 function init() returns error? {
     json roomsJson = check io:fileReadJson(room_details_file);
@@ -30,12 +18,11 @@ service /reservations on new http:Listener(9090) {
         return getAvailableRoomTypes(checkinDate, checkoutDate, guestCapacity);
     }
 
-    resource function post .(ReservationRequest reservationRequest) returns Reservation|ReservationError|error {
+    resource function post .(ReservationRequest reservationRequest) returns Reservation|ReservationNotFound|error {
         Room? room = check getAvailableRoom(reservationRequest.checkinDate, reservationRequest.checkoutDate, reservationRequest.roomType);
         if (room is ()) {
             return {body: "No rooms available for the given dates"};
         }
-
         Reservation reservation = {
             id: roomReservations.length() + 1,
             checkinDate: reservationRequest.checkinDate,
@@ -49,7 +36,7 @@ service /reservations on new http:Listener(9090) {
 
     }
 
-    resource function put [int reservation_id](UpdateReservationRequest payload) returns Reservation|ReservationError|error {
+    resource function put [int reservation_id](UpdateReservationRequest payload) returns Reservation|ReservationNotFound|error {
         Reservation? reservation = roomReservations[reservation_id];
         if (reservation is ()) {
             return {body: "Reservation not found"};
@@ -65,12 +52,12 @@ service /reservations on new http:Listener(9090) {
         return reservation;
     }
 
-    resource function delete [int reservation_id]() returns http:Ok|ReservationError {
+    resource function delete [int reservation_id]() returns http:Ok|ReservationNotFound {
         if (roomReservations.hasKey(reservation_id)) {
             _ = roomReservations.remove(reservation_id);
             return http:OK;
         } else {
-            ReservationError rError = {body: "Reservation not found"};
+            ReservationNotFound rError = {body: "Reservation not found"};
             return rError;
         }
     }
