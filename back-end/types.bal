@@ -26,13 +26,6 @@ public type RoomType record {
     decimal price;
 };
 
-public type ReservationRequest record {
-    string checkinDate;
-    string checkoutDate;
-    string roomType;
-    User user;
-    decimal rate;
-};
 
 public type User record {
     string id;
@@ -40,13 +33,3 @@ public type User record {
     string email;
     string mobileNumber;
 };
-
-public type UpdateReservationRequest record {
-    string checkinDate;
-    string checkoutDate;
-};
-
-
-
-
-
