@@ -1,3 +1,10 @@
+import ballerina/http;
+
+type ReservationNotFound record {|
+    *http:NotFound;
+    string body;
+|};
+
 public type Reservation record {|
     readonly int id;
     Room room;
@@ -38,6 +45,7 @@ public type UpdateReservationRequest record {
     string checkinDate;
     string checkoutDate;
 };
+
 
 
 

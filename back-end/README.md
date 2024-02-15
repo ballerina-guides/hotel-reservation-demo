@@ -130,22 +130,28 @@ Same as create new reservation
 
 [
     {
-        "number": 101,
-        "type": {
-            "id": 0,
-            "name": "Single",
-            "guestCapacity": 1,
-            "price": 80
-        }
+        "checkinDate": "2024-02-19T14:00:00Z",
+        "checkoutDate": "2024-02-20T10:00:00Z",
+        "rate": 120,
+        "user": {
+            "id": "123",
+            "name": "waruna",
+            "email": "waruna@someemail.com",
+            "mobileNumber": "987"
+        },
+        "roomType": "Family"
     },
     {
-        "number": 102,
-        "type": {
-            "id": 0,
-            "name": "Double",
-            "guestCapacity": 2,
-            "price": 100
-        }
+        "checkinDate": "2024-02-23T14:00:00Z",
+        "checkoutDate": "2024-02-24T10:00:00Z",
+        "rate": 100,
+        "user": {
+            "id": "123",
+            "name": "waruna",
+            "email": "waruna@someemail.com",
+            "mobileNumber": "987"
+        },
+        "roomType": "Double"
     }
 ]
 ```
