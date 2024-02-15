@@ -1,6 +1,6 @@
 # Hotel Reservation Demo
 
-This application has front end developed using React.js and API service implemented using ballerina to demo simple hotel reservation usecase.
+This application has a front end developed using React.js and an API service implemented using Ballerina to demo a simple hotel reservation use case.
 
 # How to Run 
 
@@ -21,7 +21,7 @@ npm start
 3. Visit the `http://localhost:3000/reservations`
 
 
-# How to Implemet Hotel Reservation API
+# How to Implement Hotel Reservation API
 
 ## Prerequisites
 
@@ -32,9 +32,9 @@ npm start
 
 1) Clone Git Repo https://github.com/ballerina-guides/hotel-reservation-demo
 2) Goto backend directory.
-3) Refer `backend/README.md` and generate the Record types for the service.
-4) Add a http service component implement API for hotel reservation front end. 
-   It should provide following API paths. Refer README.md for more on service resources.
+3) Refer to `backend/README.md` and generate the Record types for the service.
+4) Add HTTP service component to implement API for the hotel reservation front end. 
+   It should provide the following API paths. Please refer to README.md for more on service resources.
 
    1) Get available room types
    2) Create a reservation
@@ -42,7 +42,7 @@ npm start
    4) Get user reservations
    5) Delete the reservation
 
-5) Improve tests add a reservatio with following reservation.
+5) Improve tests and add a reservation with the following reservation.
 
 ```
 {
