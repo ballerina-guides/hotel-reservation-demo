@@ -1,0 +1,9 @@
+[user]
+id="123"
+name="waruna"
+email=""
+mobileNumber="987"
+
+[backend]
+room_details_file = "../resources/rooms.json"
+
