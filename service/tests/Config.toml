@@ -1,8 +1,8 @@
 [user]
 id="123"
 name="waruna"
-email=""
-mobileNumber="987"
+email="warudanu@gmail.com"
+mobileNumber="+94713255198"
 
 [backend]
 room_details_file = "../resources/rooms.json"
