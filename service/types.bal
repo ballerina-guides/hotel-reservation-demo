@@ -13,7 +13,6 @@ public type Room record {|
     RoomType 'type;
 |};
 
-
 public type RoomType record {
     int id;
     string name;
@@ -28,20 +27,25 @@ public type User record {
     string mobileNumber;
 };
 
-public type ReservationRequest record {
+type NewReservationRequest record {
     string checkinDate;
     string checkoutDate;
-    string roomType;
+    int rate;
     User user;
-    decimal rate;
+    string roomType;
 };
 
-public type UpdateReservationRequest record {
+type UpdateReservationRequest record {
     string checkinDate;
     string checkoutDate;
 };
 
-type ReservationNotFound record {|
+type NewReservationError record {|
+    *http:NotFound;
+    string body;
+|};
+
+type UpdateReservationError record {|
     *http:NotFound;
     string body;
 |};

@@ -313,24 +313,6 @@ modules = [
 
 [[package]]
 org = "wso2"
-name = "backend"
-version = "0.1.0"
-dependencies = [
-	{org = "ballerina", name = "http"},
-	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "log"},
-	{org = "ballerina", name = "test"},
-	{org = "ballerina", name = "time"},
-	{org = "ballerinai", name = "observe"},
-	{org = "wso2", name = "choreo.sendemail"},
-	{org = "wso2", name = "choreo.sendsms"}
-]
-modules = [
-	{org = "wso2", packageName = "backend", moduleName = "backend"}
-]
-
-[[package]]
-org = "wso2"
 name = "choreo.sendemail"
 version = "0.6.1"
 dependencies = [
@@ -353,5 +335,23 @@ dependencies = [
 ]
 modules = [
 	{org = "wso2", packageName = "choreo.sendsms", moduleName = "choreo.sendsms"}
+]
+
+[[package]]
+org = "wso2"
+name = "service"
+version = "0.1.0"
+dependencies = [
+	{org = "ballerina", name = "http"},
+	{org = "ballerina", name = "io"},
+	{org = "ballerina", name = "log"},
+	{org = "ballerina", name = "test"},
+	{org = "ballerina", name = "time"},
+	{org = "ballerinai", name = "observe"},
+	{org = "wso2", name = "choreo.sendemail"},
+	{org = "wso2", name = "choreo.sendsms"}
+]
+modules = [
+	{org = "wso2", packageName = "service", moduleName = "service"}
 ]
 
