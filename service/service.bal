@@ -16,17 +16,17 @@ service /reservations on new http:Listener(9090) {
         return getAvailableRoomTypes(checkinDate, checkoutDate, guestCapacity);
     }
 
-    resource function post .(ReservationRequest reservationRequest) returns Reservation|ReservationNotFound|error {
-        Room? room = check getAvailableRoom(reservationRequest.checkinDate, reservationRequest.checkoutDate, reservationRequest.roomType);
+    resource function post .(NewReservationRequest payload) returns Reservation|NewReservationError|error {
+        Room? room = check getAvailableRoom(payload.checkinDate, payload.checkoutDate, payload.roomType);
         if (room is ()) {
             return {body: "No rooms available for the given dates"};
         }
         Reservation reservation = {
             id: roomReservations.length() + 1,
-            checkinDate: reservationRequest.checkinDate,
-            checkoutDate: reservationRequest.checkoutDate,
+            checkinDate: payload.checkinDate,
+            checkoutDate: payload.checkoutDate,
             room: room,
-            user: reservationRequest.user
+            user: payload.user
         };
         roomReservations.put(reservation);
         sendNotificationForReservation(reservation, "Confirmed");
@@ -34,7 +34,7 @@ service /reservations on new http:Listener(9090) {
 
     }
 
-    resource function put [int reservationId](UpdateReservationRequest payload) returns Reservation|ReservationNotFound|error {
+    resource function put [int reservationId](UpdateReservationRequest payload) returns Reservation|UpdateReservationError|error {
         Reservation? reservation = roomReservations[reservationId];
         if (reservation is ()) {
             return {body: "Reservation not found"};
@@ -50,13 +50,12 @@ service /reservations on new http:Listener(9090) {
         return reservation;
     }
 
-    resource function delete [int reservationId]() returns ReservationNotFound|http:Ok {
+    resource function delete [int reservationId]() returns http:NotFound|http:Ok {
         if (roomReservations.hasKey(reservationId)) {
             _ = roomReservations.remove(reservationId);
             return http:OK;
         } else {
-            ReservationNotFound rError = {body: "Reservation not found"};
-            return rError;
+            return http:NOT_FOUND;
         }
     }
 

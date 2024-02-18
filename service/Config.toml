@@ -1,2 +1,2 @@
-[backend]
+[service]
 room_details_file = "../resources/rooms.json"
