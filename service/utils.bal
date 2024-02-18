@@ -42,7 +42,7 @@ function getAvailableRoom(string checkinDate, string checkoutDate, string roomTy
 }
 
 
-#   This function provides the allocated rooms for a given date range
+# This function provides the allocated rooms for a given date range
 #
 # + checkinDate - checkin date 
 # + checkoutDate - checkout date
@@ -58,7 +58,7 @@ function getAllocatedRooms(string checkinDate, string checkoutDate) returns tabl
         select r.room;
 }
 
-# This function provides the reservation details for a given reservation id
+# This function send notification for a reservation
 #
 # + reservation - reservation id 
 # + action - action
