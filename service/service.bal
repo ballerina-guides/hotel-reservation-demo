@@ -34,8 +34,8 @@ service /reservations on new http:Listener(9090) {
 
     }
 
-    resource function put [int reservation_id](UpdateReservationRequest payload) returns Reservation|ReservationNotFound|error {
-        Reservation? reservation = roomReservations[reservation_id];
+    resource function put [int reservationId](UpdateReservationRequest payload) returns Reservation|ReservationNotFound|error {
+        Reservation? reservation = roomReservations[reservationId];
         if (reservation is ()) {
             return {body: "Reservation not found"};
         }
@@ -50,9 +50,9 @@ service /reservations on new http:Listener(9090) {
         return reservation;
     }
 
-    resource function delete [int reservation_id]() returns ReservationNotFound|http:Ok {
-        if (roomReservations.hasKey(reservation_id)) {
-            _ = roomReservations.remove(reservation_id);
+    resource function delete [int reservationId]() returns ReservationNotFound|http:Ok {
+        if (roomReservations.hasKey(reservationId)) {
+            _ = roomReservations.remove(reservationId);
             return http:OK;
         } else {
             ReservationNotFound rError = {body: "Reservation not found"};
