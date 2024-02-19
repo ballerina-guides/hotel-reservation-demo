@@ -3,7 +3,3 @@ id="123"
 name="waruna"
 email=""
 mobileNumber=""
-
-[service]
-room_details_file = "../resources/rooms.json"
-
