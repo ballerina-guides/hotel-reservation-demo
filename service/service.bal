@@ -1,14 +1,7 @@
 import ballerina/http;
-import ballerina/io;
 
-final table<Room> key(number) rooms;
+final Room[] rooms = getAllRooms();
 table<Reservation> key(id) roomReservations = table [];
-public configurable string room_details_file = ?;
-
-function init() returns error? {
-    json roomsJson = check io:fileReadJson(room_details_file);
-    rooms = check roomsJson.cloneWithType();
-}
 
 service /reservations on new http:Listener(9090) {
 
