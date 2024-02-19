@@ -19,7 +19,7 @@ function testReservation() returns error? {
     test:assertEquals(reservation.room.number, 303);
 
     // Update a reservation
-    anydata updateReservationRequest = {checkinDate: "2024-02-20T14:00:00Z", checkoutDate: "2024-02-21T10:00:00Z"};
+    UpdateReservationRequest updateReservationRequest = {checkinDate: "2024-02-20T14:00:00Z", checkoutDate: "2024-02-21T10:00:00Z"};
     reservation = check testClient->put("/reservations/" + reservation.id.toString(), updateReservationRequest);
     test:assertEquals(reservation.room.number, 303);
 

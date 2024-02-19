@@ -1,20 +1,9 @@
 import ballerina/http;
-import ballerina/io;
 
-final table<Room> key(number) rooms;
+final Room[] rooms = getAllRooms();
 table<Reservation> key(id) roomReservations = table [];
-public configurable string room_details_file = ?;
-
-function init() returns error? {
-    json roomsJson = check io:fileReadJson(room_details_file);
-    rooms = check roomsJson.cloneWithType();
-}
 
 service /reservations on new http:Listener(9090) {
-
-    resource function get roomTypes(string checkinDate, string checkoutDate, int guestCapacity) returns RoomType[]|error {
-        return getAvailableRoomTypes(checkinDate, checkoutDate, guestCapacity);
-    }
 
     resource function post .(NewReservationRequest payload) returns Reservation|NewReservationError|error {
         Room? room = check getAvailableRoom(payload.checkinDate, payload.checkoutDate, payload.roomType);
@@ -63,5 +52,9 @@ service /reservations on new http:Listener(9090) {
         return from Reservation r in roomReservations
             where r.user.id == userId
             select r;
+    }
+
+    resource function get roomTypes(string checkinDate, string checkoutDate, int guestCapacity) returns RoomType[]|error {
+        return getAvailableRoomTypes(checkinDate, checkoutDate, guestCapacity);
     }
 }
