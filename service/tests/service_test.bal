@@ -36,3 +36,4 @@ function testReservation() returns error? {
     reservations = check testClient->get("/reservations/users/123");
     test:assertEquals(reservations.length(), 0);
 }
+
