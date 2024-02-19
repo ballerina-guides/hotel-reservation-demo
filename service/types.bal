@@ -11,7 +11,6 @@ public type Room record {|
     RoomType 'type;
 |};
 
-
 public type RoomType record {
     int id;
     string name;
